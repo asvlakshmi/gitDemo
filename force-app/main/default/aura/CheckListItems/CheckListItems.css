@@ -1,0 +1,16 @@
+.THIS .slds-button_icon-bare{
+    display: none;
+}
+.THIS .fixedTableWidth .slds-table tr th {
+	    /*padding-left: 1.5rem;*/
+	    border-right: 1px inset;
+}
+
+.THIS .fixedTableWidth .slds-table tr td {
+	     /*padding-left: 1.5rem;*/
+	     border-right: 1px inset;
+}
+.THIS .fixedTableWidth .slds-table .slds-th__action {
+    background: #F2F2F2;
+    font-weight: bold;
+}

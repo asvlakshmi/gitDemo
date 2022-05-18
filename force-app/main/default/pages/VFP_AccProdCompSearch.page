@@ -1,0 +1,86 @@
+<!-- COMPETITOR SEARCH PAGE -->
+<!-- CREATED BY Abhishek Yadav -->
+<!--  CREATED ON - 19/3/2012 -->
+<apex:page standardController="APC__c" Extensions="VFC_AccProdCompSearch" sidebar="false">
+    
+    <apex:styleSheet value="{!$Resource.StyleSheet}"/>
+    <apex:includeScript value="{!$Resource.JavaScripts}"/>
+    <script>
+        function callSearch()
+        {
+            document.getElementById('{!$component.theForm.thePageBlock.searchButton}').focus();
+        }  
+    </script>
+
+    <div id='loading' class='divstyleCreateSeries'>
+        <apex:image value="{!$Resource.ProgressBar}" style="display:block;margin:0 auto;text-align:center;margin-top:300px;"/>
+    </div>
+    
+    <apex:form styleClass="body" id="theForm" onsubmit="callSearch();return true;">
+        <!-- DISPLAYS THE SEARCH FIELDS & FILTERS -->        
+        <apex:pageMessages />
+        <Center>
+        <apex:commandButton value="{!$Label.CL00019}"  action="{!cancel}" id="cancelButton" rendered="{!displayError}"/>
+        </Center>
+        <apex:pageBlock title="{!$Label.CL00016} {!$ObjectType.Competitor__c.label}" id="thePageblock" rendered="{!NOT(displayError)}">
+        <apex:actionstatus id="status" onstart="lockScreen()" onstop="unlockScreen()"/>    
+        <div style="width:100%; text-align:center;">
+        <TABLE Style="margin-left: auto; margin-right: auto;" border="0" cellpadding="0">
+            <TR>
+                <TD VALIGN="TOP" align="center"  > 
+                    <TABLE  border="0" cellpadding="2" cellspacing="2"  >
+                        <TR>
+                            <TD align="center">
+                                
+                                <apex:outputText value="{!$ObjectType.Competitor__c.fields.Name.label}" styleclass="GreyBold" style="align:center;"/>
+                            </TD>
+                        </TR>
+                        <TR>
+                            <TD> 
+                                <apex:inputText value="{!searchText}" size="50"/>                               
+                            </TD>
+                            <TD>    
+                            </TD>
+                            <TD> 
+                            </TD>
+                        </TR>
+                    </TABLE>
+                </TD>
+                <TD valign="TOP"> 
+                <TABLE border="0" cellpadding="0"  >
+                    <TR>
+                       <TD align="center">
+                           <apex:outputText value="Search Filters" styleclass="alignRight" rendered="{!If(Labels.size>=1,true,false)}" />
+                        </TD>
+                    </TR> 
+                </TABLE>
+                <TABLE border="0" cellpadding="2" cellspacing="2"  >                   
+                    <TR>
+                        <TD ALIGN="RIGHT" >
+                            <apex:outputText value="{!level1Label}"  rendered="{!If(Labels.size>=1,true,false)}" styleclass="GreyBold"/>
+                        </TD>
+                        <TD ALIGN="LEFT">
+                            <apex:outputPanel id="lev1" rendered="{!If(Labels.size>=1,true,false)}" >
+                            <apex:selectList value="{!level1}" size="1" StyleClass="pickStyle" >
+                            <apex:selectOptions value="{!items1}" /> 
+                            </apex:selectList>
+                            </apex:outputPanel>
+                        </TD>
+                    </TR>                                                      
+                </TABLE>
+            </TD>
+        </TR>
+     </TABLE>
+     </div>
+        <br/>
+            <center>
+                <apex:commandButton value="{!$Label.CL00017}"  action="{!search}" id="searchButton"  onclick="lockScreen()" />
+                <apex:commandButton value="{!$Label.CL00019}"  action="{!cancel}" id="cancelButton" onclick="lockScreen()" oncomplete="unlockScreen()" immediate="true"/>
+                <apex:commandButton value="{!$Label.CL00018}" action="{!clear}" id="clearButton" onclick="lockScreen()" oncomplete="unlockScreen()" reRender="theForm"/>            
+            </center>            
+            <br/>
+            <!-- DISPLAYS THE SEARCH RESULTS -->                   
+            <c:DisplaySearchResultsComponent ActionLabel="{!$Label.CL00014}" recordsPerPage="{!$Label.CL00020}" pageController="{!This}" key="resultComponent" records="{!fetchedRecords}" columns="{!columns}" selectType="Single" rendered="{!DisplayResults}" sortingNotReq="false"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

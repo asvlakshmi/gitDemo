@@ -1,0 +1,32 @@
+<aura:component controller="carTypeSearch" extends="c.Base" implements="force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome,force:hasRecordId">
+    <aura:attribute name="buttonlabel" type="string" default="Search Button"/>
+    <aura:attribute name="newlabel" type="string" default="New Button"/>
+    <aura:attribute name="showNew" type="Boolean" default="false"/>
+    <aura:attribute name="carTypes" type="Car_Type__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:registerEvent name="searchFormSubmt" type="c:CarSearchFormEvent"/>
+    <lightning:layout horizontalAlign ="center">
+        <lightning:layoutItem padding="around-medium">
+            <lightning:select name="selectItem" aura:id="carTypeList" label="All Types" variant ="label-hidden" 
+                 value=" " onchange="{!c.newValueSelected}">
+                <option value=" " text="All Types"/>
+                <aura:Iteration items="{!v.carTypes}" var="carType">
+                    <option value="{!carType.Id}" text="{!carType.Name}"/>
+                </aura:Iteration>
+                
+            </lightning:select>
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem padding="around-medium">
+            <lightning:Button label="{!v.buttonlabel}" onclick="{!c.onSearchClick}" variant="brand"/>
+            <aura:if isTrue="{!v.showNew}">
+                <lightning:Button label="{#v.newlabel}" variant="Neutral" onclick="{!c.createRecord}"/>
+          </aura:if> 
+            
+            
+            
+        </lightning:layoutItem>
+    </lightning:layout>
+	
+</aura:component>

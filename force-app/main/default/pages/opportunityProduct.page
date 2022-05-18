@@ -1,0 +1,32 @@
+<apex:page standardcontroller="OpportunityProduct__c" extensions="opportunityProduct" sidebar="false">
+  <apex:styleSheet value="{!$Resource.StyleSheet}"/>
+    <apex:includeScript value="{!$Resource.JavaScripts}"/>
+    <script>
+        function callSearch()
+        {
+            document.getElementById('{!$component.theForm.thePageBlock.searchButton}').focus();
+        }  
+    </script>
+
+    <div id='loading' class='divstyleCreateSeries'>
+        <apex:image value="{!$Resource.ProgressBar}" style="display:block;margin:0 auto;text-align:center;margin-top:300px;"/>
+    </div>
+    
+    <apex:form styleClass="body" id="theForm" onsubmit="callSearch();return true;" >
+        <!-- DISPLAYS THE SEARCH FIELDS -->        
+        <apex:pageBlock title="{!$Label.CL00016}" id="thePageblock">
+        <apex:pageMessages />
+  
+          <c:DisplaySearchFieldsComponent picklistType="PROD" key="searchComponent" searchKeyword="{!searchKeyword}" pageController="{!this}" searchFilter="{!filters}" helpText="{!$Label.CL00015}" />
+            <br/>
+            <center>
+                <apex:commandButton value="{!$Label.CL00017}"  action="{!search}" id="searchButton"  onclick="lockScreen()" />
+                <apex:commandButton value="{!$Label.CL00019}"  action="{!cancel}" id="cancelButton" onclick="lockScreen()" oncomplete="unlockScreen()" immediate="true"/>
+                <apex:commandButton value="{!$Label.CL00018}" action="{!clear}" id="clearButton" onclick="lockScreen()" oncomplete="unlockScreen()" reRender="theForm"/>            
+            </center>            
+            <br/>
+            <!-- DISPLAYS THE SEARCH RESULTS -->                   
+            <c:DisplaySearchResultsComponent ActionLabel="{!$Label.CL00014}" recordsPerPage="{!$Label.CL00020}" pageController="{!This}" key="resultComponent" records="{!fetchedRecords}" columns="{!columns}" selectType="Single" rendered="{!DisplayResults}" sortingNotReq="false"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

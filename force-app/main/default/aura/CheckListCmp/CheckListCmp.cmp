@@ -1,0 +1,68 @@
+<aura:component controller= "checkUserCheckList" implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" >
+	<aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+    <aura:attribute name="checkListId" type="String" default=""/>
+    <aura:attribute name="checkListHeaderId" type="String" default="a0O2v00001eEfEJ"/>
+    <aura:attribute name="title" type="String" default="Check List"/>
+    <aura:attribute name="checkListHeader" type="CheckListHeader__c"/>
+    <aura:attribute name="changeHeader" type="Boolean" default="false" />
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner />
+    </aura:if>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:card variant="Narrow">
+            <aura:set attribute="title">
+                <lightning:icon iconName="action:follow" size="small"/>
+                <aura:if isTrue="{!!v.changeHeader}">
+                	{!v.checkListHeader.CheckList_Header_Name__c}
+                    <lightning:buttonIcon iconName="utility:edit" variant="bare" onclick="{! c.changeHeaderName }" alternativeText="Change Header" />
+                <aura:set attribute="else">
+                    <lightning:input name="input1" value="{!v.checkListHeader.CheckList_Header_Name__c}"/>
+        			<lightning:buttonIcon iconName="utility:save" variant="bare" onclick="{! c.saveHeader }" alternativeText="Change Header" />
+                    </aura:set> 
+                </aura:if>
+                
+                
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+        <aura:if isTrue="{!!v.saved}">
+           
+                <lightning:recordEditForm
+                    onload="{!c.handleLoad}"
+                    onsubmit="{!c.handleSubmit}"
+                    onsuccess="{!c.handleSuccess}"
+                    recordId="{!v.checkListId}"
+                    objectApiName="Checklist__c">
+                    <!-- the messages component is for error messages -->
+                    <lightning:messages />
+        			<div class="slds-p-left_x-large">
+                    <lightning:inputField fieldName="Name" />
+                    <lightning:inputField fieldName="Type__c" />
+                    <div class="slds-m-top_medium">
+                        <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Save" />
+                    </div>
+                    </div>
+                </lightning:recordEditForm>
+            
+            <aura:set attribute="else">
+                <lightning:recordViewForm recordId="{!v.checkListId}" objectApiName="Checklist__c">
+                <div class="slds-p-left_x-large ">
+                    <div class="slds-grid slds-box">
+                    <div class="slds-col slds-size_1-of-2">
+                         <lightning:outputField fieldName="Name" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                         <lightning:outputField fieldName="Type__c" />
+                    </div>
+                </div>
+                    <c:CheckListItems checkListId="{!v.checkListId}" headerName="{!v.checkListHeader.CheckList_Header_Name__c}"/>
+                    </div>
+            </lightning:recordViewForm>
+               
+            </aura:set>
+               
+        </aura:if>
+        </p>
+     </lightning:card>
+</aura:component>

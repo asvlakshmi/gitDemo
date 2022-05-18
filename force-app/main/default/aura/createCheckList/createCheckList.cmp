@@ -1,0 +1,42 @@
+<aura:component controller= "checkUserCheckList" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="checklistobj" type="Checklist__c" 
+                            default = "{'sobjectType' :'Checklist__c','Name' : '','Type__c' :''}"/>      
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="clicolumns" type="List"/>
+    <aura:attribute name="draftValues" type="Checklist_Item__c[]" default="[]"/>
+    <aura:attribute name="newlabel" type="String" default="Create New"/>
+    <aura:attribute name="displaylabel" type="String" default="Display CLI"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="checklist" type="Checklist__c[]"/>
+    <aura:attribute name="chlID" type="String"/>
+    <aura:attribute name="checklistitem" type="Checklist_Item__c[]"/>
+   <!-- <aura:if isTrue="{!or(v.checklist[0].Id == null,v.checklist[0].Id == '')}">
+       
+            <lightning:button label="{!v.newlabel}" onclick="{!c.create}"/>
+                </aura:if>
+            <aura:if isTrue="{!v.checklist}">
+            <lightning:layout>
+            <lightning:layoutItem size ="12" flexibility="auto"  padding="around-small">
+            <lightning:datatable columns="{! v.columns }" data="{! v.checklist }" keyField="Id"
+              hideCheckboxColumn="true"/>
+             </lightning:layoutItem>
+              </lightning:layout>
+                
+        	</aura:if>
+    
+          <lightning:button label="{!v.newlabel}" onclick="{!c.createCheckLineItem}"/>
+        <lightning:button label="{!v.displaylabel}" onclick="{!c.displyCheckLineItem}"/> -->
+    <aura:if isTrue="{!v.checklistitem}">
+    <lightning:layout>
+        
+            <lightning:layoutItem size ="12" padding="around-small">
+            <lightning:datatable columns="{! v.clicolumns }" data="{!v.checklistitem }" keyField="Id"
+              hideCheckboxColumn="true" draftValues="{! v.draftValues }" onsave="{! c.handleSave }"/>
+             </lightning:layoutItem>
+    </lightning:layout>
+    </aura:if>
+    <!--<lightning:button label="{!v.newlabel}" onclick="{!c.create}"/> -->
+    
+    
+   
+</aura:component>

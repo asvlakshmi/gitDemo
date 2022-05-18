@@ -1,0 +1,17 @@
+<apex:page controller="customPaginationVFController">
+ <apex:form >
+ <apex:pageBlock title="VF Sample Custom Pagination Example">
+ <apex:commandLink action="{!doPrevious}" rendered="{!hasPrevious}" value="Previous"/>
+ <apex:commandLink action="{!doNext}" rendered="{!hasNext}" value="Next"/>
+ <apex:pageBlockTable value="{!listContacts}" var="c">
+ <apex:column >
+ <apex:inputCheckbox value="{!c.isSelected}" />
+ </apex:column>
+ <apex:column value="{!c.tContact.FirstName}"/>
+ <apex:column value="{!c.tContact.LastName}"/>
+ </apex:pageBlockTable>
+ <apex:commandLink action="{!doPrevious}" rendered="{!hasPrevious}" value="Previous"/>
+ <apex:commandLink action="{!doNext}" rendered="{!hasNext}" value="Next"/>
+ </apex:pageBlock>
+ </apex:form>
+</apex:page>
