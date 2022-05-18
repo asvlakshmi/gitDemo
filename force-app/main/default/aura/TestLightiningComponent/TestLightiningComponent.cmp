@@ -1,3 +1,0 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
-	 <p><lightning:formattedText value="I like salesforce.com and info.salesforce.com" /></p>
-</aura:component>

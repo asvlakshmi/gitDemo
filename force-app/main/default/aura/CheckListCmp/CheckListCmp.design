@@ -1,3 +1,0 @@
-<design:component>
-	<design:attribute name="checkListId" label="sObject" description="The page that contains your field to update." />
-</design:component>

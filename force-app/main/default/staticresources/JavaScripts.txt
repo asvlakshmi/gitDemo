@@ -1,6 +1,0 @@
-function allowNumberOnly(input) 
-        {
-            !(/^[1-9]*$/i).test(input.value)?input.value = input.value.replace(/[^1-9]/ig,''):null;
-        } 
-        function lockScreen(){document.getElementById('loading').style.display='block';}
-        function unlockScreen(){document.getElementById('loading').style.display='none';}
